@@ -33,6 +33,9 @@ const user = {
           const data = response.data
           setToken(data.token)
           commit('SET_TOKEN', data.token)
+          commit('SET_ROLES', 'admin')
+          commit('SET_NAME', data.name)
+          commit('SET_AVATAR', 'https://static.wixstatic.com/media/36bb3e_54141859cf874093bcdc87fd61226170~mv2.png/v1/fill/w_84,h_80,al_c,usm_0.66_1.00_0.01/36bb3e_54141859cf874093bcdc87fd61226170~mv2.png')
           resolve()
         }).catch(error => {
           reject(error)

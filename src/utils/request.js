@@ -11,8 +11,10 @@ const service = axios.create({
 
 // request拦截器
 service.interceptors.request.use(config => {
+  console.log('--------------')
+  console.log(config)
   if (store.getters.token) {
-    config.headers['X-Token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    config.headers['token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
   }
   return config
 }, error => {
@@ -25,10 +27,12 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => {
   /**
-  * code为非20000是抛错 可结合自己业务进行修改
+  * code为非200是抛错 可结合自己业务进行修改
   */
     const res = response.data
-    if (res.code !== 20000) {
+    console.log('--------------')
+    console.log(res)
+    if (res.code !== 200) {
       Message({
         message: res.data,
         type: 'error',
