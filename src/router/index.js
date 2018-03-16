@@ -37,51 +37,66 @@ export const constantRouterMap = [
     }]
   },
 
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
+  // {
+  //   path: '/example',
+  //   component: Layout,
+  //   redirect: '/example/table',
+  //   name: 'Example',
+  //   meta: { title: 'Example', icon: 'example' },
+  //   children: [
+  //     {
+  //       path: 'table',
+  //       name: 'Table',
+  //       component: () => import('@/views/table/index'),
+  //       meta: { title: 'Table', icon: 'table' }
+  //     },
+  //     {
+  //       path: 'tree',
+  //       name: 'Tree',
+  //       component: () => import('@/views/tree/index'),
+  //       meta: { title: 'Tree', icon: 'tree' }
+  //     }
+  //   ]
+  // },
 
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
+  // {
+  //   path: '/form',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Form',
+  //       component: () => import('@/views/form/index'),
+  //       meta: { title: 'Form', icon: 'form' }
+  //     }
+  //   ]
+  // },
 
   {
     path: '/houses',
     component: Layout,
+    redirect: '/houses/index',
+    name: 'Houses',
+    meta: { title: 'Houses', icon: 'example' },
     children: [
       {
         path: 'index',
-        name: 'Houses',
+        name: 'HousesTable',
         component: () => import('@/views/houses/index'),
         meta: { title: 'Houses', icon: 'table' }
+      },
+      {
+        path: 'create',
+        name: 'createHouse',
+        component: () => import('@/views/houses/createHouse'),
+        meta: { title: 'createHouse', icon: 'form' }
       }
+      // {
+      //   path: ':id',
+      //   name: 'detailHouse',
+      //   component: () => import('@/views/houses/detailHouse'),
+      //   meta: { title: 'detailHouse', icon: 'form' }
+      // }
     ]
   },
 

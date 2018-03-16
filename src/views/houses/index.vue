@@ -1,7 +1,16 @@
 <template>
 <div class='app-container'>
-    <el-button class='create-house-button' @click.native.prevent='createRow()' type="primary">创建</el-button>
-    <el-table class='houses-table' :data='tableData' stripe border>
+  <el-row type="flex" class="opertion-row" justify="center">
+    <el-col :span="1" class="create-col">
+      <el-button @click.native.prevent='createRow()' type="primary">创建</el-button>
+    </el-col>
+    <el-col :span="1" class="delete-col">
+      <el-button  @click='isShowDeleteDialog()' type='primary'>删除</el-button>
+    </el-col>
+  </el-row>
+  <el-table class='houses-table' :data='tableData' stripe border @selection-change="handleSelectionChange" highlight-current-row @current-change="handleCurrentChange">
+        <el-table-column type="selection" width="55" :visible.sync="dialogVisible"></el-table-column>
+        <el-table-column prop='ID' label='ID' width='100'></el-table-column>
         <el-table-column prop='resourceID' label='资源ID' width='180' :filters='resourceIDFilersData' :filter-method='filterHandler'></el-table-column>
         <el-table-column prop='title' label='姓名' width='180'></el-table-column>
         <el-table-column prop='des' label='描述'></el-table-column>
@@ -11,28 +20,40 @@
                 <img :src="scope.row.thumbnailUrl" height="40">
             </template>
         </el-table-column>
-        <el-table-column fixed='right' label='操作' width='220'>
+        <!-- <el-table-column fixed='right' label='操作' width='220'>
           <template slot-scope='scope'>
             <el-button @click.native.prevent='detailRow(scope.$index, scope.row, scope.column, tableData)' type='info' size='mini'>详情</el-button>
             <el-button @click.native.prevent='editRow(scope.$index, scope.row, scope.column, tableData)' tpye='primary' size='mini'>编辑</el-button>
-            <el-button @click.native.prevent='deleteRow(scope.$index, scope.row, scope.column, tableData)' type='danger' size='mini'>删除</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
     </el-table>
+    <el-dialog title="删除提示" :visible.sync="dialogVisible" width="30%">
+      <span>是否删除 {{multipleSelection.length}}项数据?</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false" @click.native.prevent='deleteRow()'>确 定</el-button>
+      </span>
+    </el-dialog>
 </div>
 </template>
 
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .app-container {
-  .create-house-button {
-    position: absolute;
-    top: 60px;
-    right: 20px;
+  .opertion-row {
+    // height: 50px;
+    background: #e5e9f2;
+    .create-col {
+      top: 10px;
+      background: red($color: #000000)
+    }
+    .delete-col {
+      top: 10px;
+    }
   }
-  .houses-table {
-    top: 40px;
-  }
+  // .houses-table {
+  //   top: 40px;
+  // }
 }
 </style>
 
@@ -42,6 +63,7 @@ export default {
     return {
       tableData: [
         {
+          ID: 1,
           resourceID: 'V01',
           title: '房子01',
           des: '房子01很好很好，非常好',
@@ -49,13 +71,15 @@ export default {
           thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
         },
         {
+          ID: 2,
           resourceID: 'V02',
           title: '房子02',
           des: '房子02很好很好，非常好',
           address: '上海市金山区金沙江路 1518 弄',
-          thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
+          thumbnailUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png'
         },
         {
+          ID: 3,
           resourceID: 'V03',
           title: '房子03',
           des: '房子03很好很好，非常好',
@@ -63,6 +87,7 @@ export default {
           thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
         },
         {
+          ID: 4,
           resourceID: 'V04',
           title: '房子04',
           des: '房子04很好很好，非常好',
@@ -70,6 +95,7 @@ export default {
           thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
         },
         {
+          ID: 5,
           resourceID: 'V4',
           title: '房子04',
           des: '房子04很好很好，非常好',
@@ -77,6 +103,7 @@ export default {
           thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
         },
         {
+          ID: 6,
           resourceID: 'V4',
           title: '房子04',
           des: '房子04很好很好，非常好',
@@ -84,6 +111,7 @@ export default {
           thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
         },
         {
+          ID: 7,
           resourceID: 'V4',
           title: '房子04',
           des: '房子04很好很好，非常好',
@@ -91,6 +119,7 @@ export default {
           thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
         },
         {
+          ID: 8,
           resourceID: 'V4',
           title: '房子04',
           des: '房子04很好很好，非常好',
@@ -98,6 +127,7 @@ export default {
           thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
         },
         {
+          ID: 9,
           resourceID: 'V4',
           title: '房子04',
           des: '房子04很好很好，非常好',
@@ -105,6 +135,7 @@ export default {
           thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
         },
         {
+          ID: 10,
           resourceID: 'V4',
           title: '房子04',
           des: '房子04很好很好，非常好',
@@ -121,36 +152,60 @@ export default {
           text: 'V02',
           value: 'V02'
         }
-      ]
+      ],
+      multipleSelection: [],
+      dialogVisible: false,
+      currentRow: null
     }
   },
   methods: {
+    handleCurrentChange(val) {
+      console.log(val)
+      this.currentRow = val
+      // TODO跳转 router
+    },
+    isShowDeleteDialog() {
+      console.log('isShowDeleteDialog')
+      if (this.multipleSelection.length !== 0) {
+        this.dialogVisible = true
+      }
+    },
+    handleSelectionChange(val) {
+      console.log('---------')
+      this.multipleSelection = val
+      this.$router.push({ path: '/houses/1' })
+    },
     filterHandler(value, row, column) {
       return row.resourceID === value
     },
     createRow() {
       console.log('create')
+      // TODO: 跳转到创建页面
+      this.$router.push({ path: '/houses/create' })
     },
-    editRow(index, row, column, data) {
-      console.log('edit')
-      console.log(index)
-      console.log(row)
-      console.log(column)
-      console.log(data)
-    },
-    detailRow(index, row, column, data) {
-      console.log('detail')
-      console.log(index)
-      console.log(row)
-      console.log(column)
-      console.log(data)
-    },
-    deleteRow(index, row, column, data) {
+    // editRow(index, row, column, data) {
+    //   console.log('edit')
+    //   console.log(index)
+    //   console.log(row)
+    //   console.log(column)
+    //   console.log(data)
+    // },
+    // detailRow(index, row, column, data) {
+    //   console.log('detail')
+    //   console.log(index)
+    //   console.log(row)
+    //   console.log(column)
+    //   console.log(data)
+    // },
+    deleteRow() {
       console.log('delete')
-      console.log(index)
-      console.log(row)
-      console.log(column)
-      console.log(data)
+      // TODO:请求deletes接口
+      const selectionData = this.multipleSelection
+      this.tableData = this.tableData.filter(function(data) {
+        return selectionData.map(function(selection) {
+          return selection.ID
+        }).indexOf(data.ID) === -1
+      })
     }
   }
 }
