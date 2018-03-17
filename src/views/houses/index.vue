@@ -1,11 +1,11 @@
 <template>
 <div class='app-container'>
-  <el-row type="flex" class="opertion-row" justify="center">
-    <el-col :span="1" class="create-col">
-      <el-button @click.native.prevent='createRow()' type="primary">创建</el-button>
-    </el-col>
-    <el-col :span="1" class="delete-col">
-      <el-button  @click='isShowDeleteDialog()' type='primary'>删除</el-button>
+  <el-row type="flex" justify="end">
+    <el-col :span="6">
+      <el-button-group >
+        <el-button @click.native.prevent='createRow()' type="primary" icon="el-icon-edit"></el-button>
+        <el-button @click='isShowDeleteDialog()' type='primary' icon="el-icon-delete"></el-button>
+      </el-button-group>
     </el-col>
   </el-row>
   <el-table class='houses-table' :data='tableData' stripe border @selection-change="handleSelectionChange" highlight-current-row @current-change="handleCurrentChange">
@@ -40,15 +40,14 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .app-container {
-  .opertion-row {
-    // height: 50px;
+  .el-row {
     background: #e5e9f2;
-    .create-col {
-      top: 10px;
-      background: red($color: #000000)
-    }
-    .delete-col {
-      top: 10px;
+    height: 60px;
+    .el-col {
+      .el-button-group {
+         padding: 10px 10px;
+         float: right
+      }
     }
   }
   // .houses-table {
