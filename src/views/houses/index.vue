@@ -1,6 +1,6 @@
 <template>
 <div class='app-container'>
-  <el-row type="flex" justify="end">
+  <el-row type="flex" justify="start">
     <el-col :span="6">
       <el-button-group >
         <el-button @click.native.prevent='createRow()' type="primary" icon="el-icon-edit"></el-button>
@@ -46,7 +46,7 @@
     .el-col {
       .el-button-group {
          padding: 10px 10px;
-         float: right
+         float: left
       }
     }
   }
@@ -57,91 +57,12 @@
 </style>
 
   <script>
+import { getHouses } from '@/api/houses'
+
 export default {
   data() {
     return {
-      tableData: [
-        {
-          ID: 1,
-          resourceID: 'V01',
-          title: '房子01',
-          des: '房子01很好很好，非常好',
-          address: '上海市普陀区金沙江路 1518 弄',
-          thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
-        },
-        {
-          ID: 2,
-          resourceID: 'V02',
-          title: '房子02',
-          des: '房子02很好很好，非常好',
-          address: '上海市金山区金沙江路 1518 弄',
-          thumbnailUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png'
-        },
-        {
-          ID: 3,
-          resourceID: 'V03',
-          title: '房子03',
-          des: '房子03很好很好，非常好',
-          address: '上海市普陀区金沙江路 1518 弄',
-          thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
-        },
-        {
-          ID: 4,
-          resourceID: 'V04',
-          title: '房子04',
-          des: '房子04很好很好，非常好',
-          address: '上海市普陀区金沙江路 1518 弄',
-          thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
-        },
-        {
-          ID: 5,
-          resourceID: 'V4',
-          title: '房子04',
-          des: '房子04很好很好，非常好',
-          address: '上海市普陀区金沙江路 1518 弄',
-          thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
-        },
-        {
-          ID: 6,
-          resourceID: 'V4',
-          title: '房子04',
-          des: '房子04很好很好，非常好',
-          address: '上海市普陀区金沙江路 1518 弄',
-          thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
-        },
-        {
-          ID: 7,
-          resourceID: 'V4',
-          title: '房子04',
-          des: '房子04很好很好，非常好',
-          address: '上海市普陀区金沙江路 1518 弄',
-          thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
-        },
-        {
-          ID: 8,
-          resourceID: 'V4',
-          title: '房子04',
-          des: '房子04很好很好，非常好',
-          address: '上海市普陀区金沙江路 1518 弄',
-          thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
-        },
-        {
-          ID: 9,
-          resourceID: 'V4',
-          title: '房子04',
-          des: '房子04很好很好，非常好',
-          address: '上海市普陀区金沙江路 1518 弄',
-          thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
-        },
-        {
-          ID: 10,
-          resourceID: 'V4',
-          title: '房子04',
-          des: '房子04很好很好，非常好',
-          address: '上海市普陀区金沙江路 1518 弄',
-          thumbnailUrl: 'http://pic.ibaotu.com/00/55/70/856888piCpwt.jpg-0.jpg!ww700'
-        }
-      ],
+      tableData: [],
       resourceIDFilersData: [
         {
           text: 'V01',
@@ -157,11 +78,21 @@ export default {
       currentRow: null
     }
   },
+  created() {
+    console.log('created')
+    this.fetchData()
+  },
   methods: {
+    fetchData() {
+      getHouses().then(response => {
+        this.tableData = response.data.lists
+      })
+    },
     handleCurrentChange(val) {
       console.log(val)
       this.currentRow = val
       // TODO跳转 router
+      this.$router.push({ path: '/houses/detail/' + this.currentRow.ID })
     },
     isShowDeleteDialog() {
       console.log('isShowDeleteDialog')
@@ -172,7 +103,6 @@ export default {
     handleSelectionChange(val) {
       console.log('---------')
       this.multipleSelection = val
-      this.$router.push({ path: '/houses/1' })
     },
     filterHandler(value, row, column) {
       return row.resourceID === value

@@ -83,20 +83,21 @@ export const constantRouterMap = [
         path: 'index',
         name: 'HousesTable',
         component: () => import('@/views/houses/index'),
-        meta: { title: 'Houses', icon: 'table' }
+        meta: { title: 'table', icon: 'table' }
       },
       {
         path: 'create',
         name: 'createHouse',
         component: () => import('@/views/houses/createHouse'),
         meta: { title: 'createHouse', icon: 'form' }
+      },
+      {
+        path: 'detail/:id',
+        name: 'detailHouse',
+        hidden: true,
+        component: () => import('@/views/houses/detailHouse'),
+        meta: { title: 'detailHouse', icon: 'form' }
       }
-      // {
-      //   path: ':id',
-      //   name: 'detailHouse',
-      //   component: () => import('@/views/houses/detailHouse'),
-      //   meta: { title: 'detailHouse', icon: 'form' }
-      // }
     ]
   },
 

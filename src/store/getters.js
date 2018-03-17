@@ -4,5 +4,7 @@ const getters = {
   avatar: state => state.user.avatar,
   name: state => state.user.name,
   roles: state => state.user.roles
+  // houses: state => state.houses.houses,
+  // currentHouse: state => state.houses.currentHouse
 }
 export default getters
