@@ -11,8 +11,8 @@
   <el-table class='houses-table' :data='tableData' stripe border @selection-change="handleSelectionChange" highlight-current-row @current-change="handleCurrentChange">
         <el-table-column type="selection" width="55" :visible.sync="dialogVisible"></el-table-column>
         <el-table-column prop='ID' label='ID' width='100'></el-table-column>
-        <el-table-column prop='resourceID' label='资源ID' width='180' :filters='resourceIDFilersData' :filter-method='filterHandler'></el-table-column>
-        <el-table-column prop='title' label='姓名' width='180'></el-table-column>
+        <el-table-column prop='resourceType' label='资源ID' width='180' :filters='resourceTypeFilersData' :filter-method='filterHandler'></el-table-column>
+        <el-table-column prop='title' label='标题' width='180'></el-table-column>
         <el-table-column prop='des' label='描述'></el-table-column>
         <el-table-column prop='address' label='地址'></el-table-column>
         <el-table-column prop='thumbnailUrl' label='缩略图' width='60'>
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       tableData: [],
-      resourceIDFilersData: [
+      resourceTypeFilersData: [
         {
           text: 'V01',
           value: 'V01'
@@ -71,6 +71,14 @@ export default {
         {
           text: 'V02',
           value: 'V02'
+        },
+        {
+          text: 'V03',
+          value: 'V03'
+        },
+        {
+          text: 'V4',
+          value: 'V4'
         }
       ],
       multipleSelection: [],
@@ -105,7 +113,7 @@ export default {
       this.multipleSelection = val
     },
     filterHandler(value, row, column) {
-      return row.resourceID === value
+      return row.resourceType === value
     },
     createRow() {
       console.log('create')

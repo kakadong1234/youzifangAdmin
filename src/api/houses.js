@@ -12,7 +12,7 @@ export function getHouses() {
     data.data.lists = [
       {
         ID: 1,
-        resourceID: 'V01',
+        resourceType: 'V01',
         title: '房子01',
         des: '房子01很好很好，非常好',
         address: '上海市普陀区金沙江路 1518 弄',
@@ -20,7 +20,7 @@ export function getHouses() {
       },
       {
         ID: 2,
-        resourceID: 'V02',
+        resourceType: 'V02',
         title: '房子02',
         des: '房子02很好很好，非常好',
         address: '上海市金山区金沙江路 1518 弄',
@@ -28,7 +28,7 @@ export function getHouses() {
       },
       {
         ID: 3,
-        resourceID: 'V03',
+        resourceType: 'V03',
         title: '房子03',
         des: '房子03很好很好，非常好',
         address: '上海市普陀区金沙江路 1518 弄',
@@ -36,7 +36,7 @@ export function getHouses() {
       },
       {
         ID: 4,
-        resourceID: 'V04',
+        resourceType: 'V03',
         title: '房子04',
         des: '房子04很好很好，非常好',
         address: '上海市普陀区金沙江路 1518 弄',
@@ -44,7 +44,7 @@ export function getHouses() {
       },
       {
         ID: 5,
-        resourceID: 'V4',
+        resourceType: 'V4',
         title: '房子04',
         des: '房子04很好很好，非常好',
         address: '上海市普陀区金沙江路 1518 弄',
@@ -52,7 +52,7 @@ export function getHouses() {
       },
       {
         ID: 6,
-        resourceID: 'V4',
+        resourceType: 'V4',
         title: '房子04',
         des: '房子04很好很好，非常好',
         address: '上海市普陀区金沙江路 1518 弄',
@@ -60,7 +60,7 @@ export function getHouses() {
       },
       {
         ID: 7,
-        resourceID: 'V4',
+        resourceType: 'V4',
         title: '房子04',
         des: '房子04很好很好，非常好',
         address: '上海市普陀区金沙江路 1518 弄',
@@ -68,7 +68,7 @@ export function getHouses() {
       },
       {
         ID: 8,
-        resourceID: 'V4',
+        resourceType: 'V4',
         title: '房子04',
         des: '房子04很好很好，非常好',
         address: '上海市普陀区金沙江路 1518 弄',
@@ -76,7 +76,7 @@ export function getHouses() {
       },
       {
         ID: 9,
-        resourceID: 'V4',
+        resourceType: 'V4',
         title: '房子04',
         des: '房子04很好很好，非常好',
         address: '上海市普陀区金沙江路 1518 弄',
@@ -84,7 +84,7 @@ export function getHouses() {
       },
       {
         ID: 10,
-        resourceID: 'V4',
+        resourceType: 'V4',
         title: '房子04',
         des: '房子04很好很好，非常好',
         address: '上海市普陀区金沙江路 1518 弄',
