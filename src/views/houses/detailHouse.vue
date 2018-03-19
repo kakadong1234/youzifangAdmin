@@ -43,7 +43,8 @@
       </el-form-item>
       <el-form-item label="图片墙" prop="imgUrlList">
         <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" v-model="form.imgUrlList" list-type="picture-card" 
-        :before-upload="beforeAvatarUpload" multiple>
+        :data="dataObj" :headers="headers"
+        :before-upload="beforeUpload" :on-success="onPicUploadSuccess" :on-remove="onPicRemove" multiple>
           <i class="el-icon-plus"></i>
           <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过5MB</div>
         </el-upload>
@@ -102,6 +103,12 @@ export default {
         title: [{ required: true, trigger: 'blur', validator: validateTitle }],
         resourceType: [{ required: true, trigger: 'blur', validator: validateResourceType }],
         imgUrlList: [{ required: true, trigger: 'blur', validator: validateImgUrlList }]
+      },
+      dataObj: { bizType: 1 },
+      headers: {
+        ts: 1521450452371,
+        token: '4056a87b6101a0c16a85db1af0d0eace',
+        platform: 'WEB'
       }
     }
   },
@@ -112,7 +119,19 @@ export default {
     this.getHouseData(ID)
   },
   methods: {
-    beforeAvatarUpload(file) {
+    onPicUploadSuccess(response, file, fileList) {
+      console.log(response)
+      console.log('---------------')
+      file.url = response.data.url
+      this.form.imgUrlList.push(response.data.url)
+    },
+    onPicRemove(file, fileList) {
+      console.log(file)
+      this.form.imgUrlList = this.form.imgUrlList.filter(function(imgUrl) {
+        return imgUrl !== file.url
+      })
+    },
+    beforeUpload(file) {
       console.log(file)
       const isJPGOoPNG = ['image/jpeg', 'image/png'].indexOf(file.type) !== -1
       const isLt = file.size / 1024 / 1024 < 5
@@ -126,8 +145,11 @@ export default {
     },
     getHouseData(ID) {
       getHouse(ID).then(response => {
+        console.log('---------')
         console.log(response)
         this.form = response.data
+        console.log(this.form)
+        this.form.imgUrlList = response.data.imgUrlList // TODO
       })
     },
     editHouseData(newHouse) {

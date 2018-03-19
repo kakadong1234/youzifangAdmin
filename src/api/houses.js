@@ -122,6 +122,7 @@ export function getHouse(ID) {
     data.data = MOCK_HOUSES.find(function(house) {
       return house.ID === parseInt(ID)
     })
+    data.data.imgUrlList = ['http://www.imogu.cn/sucai/4195.html', 'http://www.imogu.cn/sucai/4195.html']
     reslove(data)
   })
 }
