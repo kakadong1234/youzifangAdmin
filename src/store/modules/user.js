@@ -35,7 +35,7 @@ const user = {
           commit('SET_TOKEN', data.token)
           commit('SET_ROLES', 'admin')
           commit('SET_NAME', data.name)
-          commit('SET_AVATAR', 'https://static.wixstatic.com/media/36bb3e_54141859cf874093bcdc87fd61226170~mv2.png/v1/fill/w_84,h_80,al_c,usm_0.66_1.00_0.01/36bb3e_54141859cf874093bcdc87fd61226170~mv2.png')
+          commit('SET_AVATAR', 'http://pic.ibaotu.com/00/20/81/58g888piCV68.jpg-0.jpg!ww700')
           resolve()
         }).catch(error => {
           reject(error)

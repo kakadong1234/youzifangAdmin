@@ -49,20 +49,21 @@
         </el-upload>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">编辑</el-button>
-        <el-button @click="onCancel">取消</el-button>
+        <el-button type="primary" @click="onSave">保存</el-button>
+        <el-button @click="onDelete" type="danger">删除</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import { getHouse, editHouse } from '@/api/houses'
+import { getHouse, editHouse, deleteHouse } from '@/api/houses'
 
 export default {
   data() {
     return {
       form: {
+        ID: '',
         title: '',
         address: '',
         resourceType: '',
@@ -76,12 +77,14 @@ export default {
   },
   created() {
     console.log('created')
-    const ID = 1 // TODO: getID form url
+    const ID = this.$route.path.split('/')[3]
+    console.log(ID)
     this.getHouseData(ID)
   },
   methods: {
     getHouseData(ID) {
       getHouse(ID).then(response => {
+        console.log(response)
         this.form = response.data
       })
     },
@@ -91,7 +94,13 @@ export default {
         this.$router.push({ path: '/houses/index' })
       })
     },
-    onSubmit() {
+    deleteHouseData(ID) {
+      deleteHouse(ID).then(response => {
+        this.$message('delete success')
+        this.$router.push({ path: '/houses/index' })
+      })
+    },
+    onSave() {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.editHouseData(this.form)
@@ -101,11 +110,8 @@ export default {
         }
       })
     },
-    onCancel() {
-      this.$message({
-        message: 'cancel!',
-        type: 'warning'
-      })
+    onDelete() {
+      this.deleteHouseData(this.form.ID)
     }
   }
 }
