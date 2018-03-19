@@ -42,10 +42,11 @@
         <el-input type="textarea" v-model="form.desc"></el-input>
       </el-form-item>
       <el-form-item label="图片墙" prop="imgUrlList">
-        <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple v-model="form.imgUrlList">
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过5Mb</div>
+        <el-upload class="upload-demo" action="noUse"
+        v-model="form.imgUrlList" list-type="picture-card" 
+        :before-upload="beforeUpload" :on-success="onPicUploadSuccess" :on-remove="onPicRemove"  multiple>
+          <i class="el-icon-plus"></i>
+          <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过5MB</div>
         </el-upload>
       </el-form-item>
       <el-form-item>
@@ -106,6 +107,29 @@ export default {
     }
   },
   methods: {
+    onPicUploadSuccess(response, file, fileList) {
+      console.log(response)
+      file.url = response.url
+      this.imgUrlList.push(response.url)
+    },
+    onPicRemove(file, fileList) {
+      this.imgUrlList.remove(file.url)
+    },
+    beforeUpload(file) {
+      console.log(file)
+      const isJPGOoPNG = ['image/jpeg', 'image/png'].indexOf(file.type) !== -1
+      const isLt = file.size / 1024 / 1024 < 5
+      if (!isJPGOoPNG) {
+        this.$message.error('上传图片只能是jpg/png格式!')
+        return false
+      }
+      if (!isLt) {
+        this.$message.error('上传头像图片大小不能超过 5MB!')
+        return false
+      }
+      // TODO:http 请求
+      return true
+    },
     createHouseData(house) {
       createHouse(house).then(response => {
         this.$message('create success')
