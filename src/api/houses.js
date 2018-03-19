@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 
 export function getHouses() {
+  console.log('getHouses request')
   // return request({
   //   url: '/houses',
   //   method: 'get'
@@ -96,14 +97,19 @@ export function getHouses() {
 }
 
 export function createHouse(house) {
-  return request({
-    url: '/houses',
-    method: 'post',
-    data: house
+  console.log('create request')
+  // return request({
+  //   url: '/houses',
+  //   method: 'post',
+  //   data: house
+  // })
+  return new Promise(function(reslove, reject) {
+    reslove()
   })
 }
 
 export function getHouse(ID) {
+  console.log('getHouse request')
   return request({
     url: '/houses/' + ID,
     method: 'get'
@@ -111,6 +117,7 @@ export function getHouse(ID) {
 }
 
 export function editHouse(newHouse) {
+  console.log('editHouse request')
   return request({
     url: '/houses/' + newHouse.ID,
     method: 'post',
@@ -119,6 +126,7 @@ export function editHouse(newHouse) {
 }
 
 export function deleteHouse(ID) {
+  console.log('deleteHouse request')
   return request({
     url: '/houses/' + ID,
     method: 'delete'

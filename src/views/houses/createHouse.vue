@@ -1,13 +1,13 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="form" label-width="120px">
-      <el-form-item label="标题">
+    <el-form ref="form" :model="form" :rules="createRules" label-width="120px">
+      <el-form-item label="标题" prop="title">
         <el-input v-model="form.title"></el-input>
       </el-form-item>
       <el-form-item label="地址">
         <el-input v-model="form.address"></el-input>
       </el-form-item>
-      <el-form-item label="房子类型">
+      <el-form-item label="房子类型" prop="resourceType">
         <el-select v-model="form.resourceType" placeholder="请选择房子类型">
           <el-option label="V01" value="V01"></el-option>
           <el-option label="V02" value="V02"></el-option>
@@ -41,8 +41,8 @@
       <el-form-item label="描述">
         <el-input type="textarea" v-model="form.desc"></el-input>
       </el-form-item>
-      <el-form-item label="图片">
-        <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple v-model="form.img">
+      <el-form-item label="图片" prop="img">
+        <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple v-model="form.imgUrl">
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -57,8 +57,36 @@
 </template>
 
 <script>
+import { isValidTitle, isValidResourceType } from '@/utils/validate'
+import { createHouse } from '@/api/houses'
+
 export default {
   data() {
+    const validateTitle = (rule, value, callback) => {
+      console.log('-----------------123')
+      if (!isValidTitle(value)) {
+        callback(new Error('请输入正确的用户名'))
+      } else {
+        callback()
+      }
+    }
+    const validateResourceType = (rule, value, callback) => {
+      if (!isValidResourceType(value)) {
+        callback(new Error('请选择正确的资源类型'))
+      } else {
+        callback()
+      }
+    }
+
+    const validateImgUrl = (rule, value, callback) => {
+      // if (!validateURL(value)) {
+      //   callback(new Error('请输入正确的图片地址'))
+      // } else {
+      //   callback()
+      // }
+      callback()
+    }
+
     return {
       form: {
         title: '',
@@ -68,21 +96,38 @@ export default {
         startDate: '',
         endDate: '',
         desc: '',
-        img: ''
+        imgUrl: ''
+      },
+      createRules: {
+        title: [{ required: true, trigger: 'blur', validator: validateTitle }],
+        resourceType: [{ required: true, trigger: 'blur', validator: validateResourceType }],
+        img: [{ required: true, trigger: 'blur', validator: validateImgUrl }]
       }
     }
   },
   methods: {
+    createHouseData(house) {
+      createHouse(house).then(response => {
+        this.$message('create success')
+        this.$router.push({ path: '/houses/index' })
+      })
+    },
     onSubmit() {
-      // TODO: 接口请求
-      this.$message('create success')
-      this.$router.push({ path: '/houses/index' })
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.createHouseData(this.form)
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     onCancel() {
       this.$message({
         message: 'cancel!',
         type: 'warning'
       })
+      this.$router.push({ path: '/houses/index' })
     }
   }
 }

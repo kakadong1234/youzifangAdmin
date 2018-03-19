@@ -31,3 +31,17 @@ export function validatAlphabets(str) {
   return reg.test(str)
 }
 
+/* houses */
+
+/* title*/
+export function isValidTitle(str) {
+  return str.length <= 50
+}
+
+/* resourceType*/
+export function isValidResourceType(str) {
+  return ['V01', 'V02', 'V03', 'V4'].indexOf(str) !== -1
+}
+
+/* houses */
+

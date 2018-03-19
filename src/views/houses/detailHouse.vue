@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { getHouse editHouse } from '@/api/houses'
+import { getHouse, editHouse } from '@/api/houses'
 
 export default {
   data() {
@@ -80,8 +80,8 @@ export default {
     this.getHouseData(ID)
   },
   methods: {
-    getHouseData() {
-      getHouse().then(response => {
+    getHouseData(ID) {
+      getHouse(ID).then(response => {
         this.form = response.data
       })
     },
@@ -92,16 +92,14 @@ export default {
       })
     },
     onSubmit() {
-      // TODO: 接口请求
-       this.$refs.form.validate(valid => {
+      this.$refs.form.validate(valid => {
         if (valid) {
-            this.editHouseData(this.form)
+          this.editHouseData(this.form)
         } else {
           console.log('error submit!!')
           return false
         }
       })
-      
     },
     onCancel() {
       this.$message({
